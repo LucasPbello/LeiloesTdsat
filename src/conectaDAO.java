@@ -16,7 +16,7 @@ public class conectaDAO {
     public boolean connectDB() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/exemplo_senac", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/leiloestdsat", "root", "root");
             return true;
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Erro ao conectar: " + ex.getMessage());
@@ -49,7 +49,7 @@ public class conectaDAO {
     public List<ProdutosDTO> getProdutosDTO() {
 
         List<ProdutosDTO> listaProdutosDTO = new ArrayList<>();
-        String sql = "SELECT * FROM podcast";
+        String sql = "SELECT * FROM produtos";
 
         try {
             PreparedStatement stmt = this.conn.prepareStatement(sql);
@@ -72,4 +72,5 @@ public class conectaDAO {
             return null;
         }
     }
+    
 }
