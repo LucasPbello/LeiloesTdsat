@@ -126,29 +126,28 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        try {
 
-            ProdutosDTO produto = new ProdutosDTO();
-            String nome = cadastroNome.getText();
-            String valor = cadastroValor.getText();
-            String status = "A Venda";
-            produto.setNome(nome);
-            produto.setValor(Integer.parseInt(valor));
-            produto.setStatus(status);
+        ProdutosDTO p = new ProdutosDTO();
+        conectaDAO dao = new conectaDAO();
 
-            ProdutosDAO produtodao = new ProdutosDAO();
-            produtodao.cadastrarProduto(produto);
+        p.setNome(cadastroNome.getText());
+        p.setValor(Integer.parseInt(cadastroValor.getText()));
 
-            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+        if (dao.connectDB()) {
+            int resposta = dao.salvar(p);
 
-        } catch (NumberFormatException e) {
+            if (resposta == 1) {
+                JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
 
-            JOptionPane.showMessageDialog(null, "Digite um valor numérico válido!");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto: " + e.getMessage());
+            } else if (resposta == 1062) {
+                JOptionPane.showMessageDialog(null, "Produto já cadastrado!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar!");
+            }
+            dao.desconectar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro de conexão!");
         }
-
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

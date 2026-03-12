@@ -35,7 +35,7 @@ public class conectaDAO {
     public int salvar(ProdutosDTO prod) {
         int status;
         try {
-            st = conn.prepareStatement("INSERT INTO ProdutosDTO (nome, valor) VALUES(?,?)");
+            st = conn.prepareStatement("INSERT INTO produtos (nome, valor) VALUES(?,?)");
             st.setString(1, prod.getNome());
             st.setInt(2, prod.getValor());
             status = st.executeUpdate();
