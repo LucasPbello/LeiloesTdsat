@@ -5,6 +5,9 @@ public class ProdutosDTO {
     private Integer valor;
     private String status;
 
+    public ProdutosDTO(){
+    }
+    
     public Integer getId() {
         return id;
     }
