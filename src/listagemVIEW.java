@@ -138,29 +138,30 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         try {
-        String idTexto = id_produto_venda.getText().trim();
+            String idTexto = id_produto_venda.getText().trim();
 
-        if (idTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite um ID!");
-            return;
+            if (idTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Digite um ID!");
+                return;
+            }
+
+            int id = Integer.parseInt(idTexto);
+
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            produtosdao.venderProduto(id);
+
+            listarProdutos(); // atualiza tabela
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID inválido!");
         }
-
-        int id = Integer.parseInt(idTexto);
-
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        produtosdao.venderProduto(id);
-
-        listarProdutos(); // atualiza tabela
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "ID inválido!");
-    }
 
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        vendasVIEW vendas = new vendasVIEW();
+        vendas.setVisible(true);
+
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -215,13 +216,11 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    
-
     private void listarProdutos() {
         conectaDAO conecta = new conectaDAO();
-        
+
         if (conecta.connectDB()) {
-            List<ProdutosDTO> lista = conecta.getProdutosDTO(); 
+            List<ProdutosDTO> lista = conecta.getProdutosDTO();
 
             DefaultTableModel tabela = (DefaultTableModel) listaProdutos.getModel();
             tabela.setNumRows(0); // limpa a tabela antes de preencher
@@ -231,9 +230,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                     p.getId(),
                     p.getNome(),
                     p.getValor(),
-                    p.getStatus(),
-                    
-                };
+                    p.getStatus(),};
                 tabela.addRow(obj);
             }
 
