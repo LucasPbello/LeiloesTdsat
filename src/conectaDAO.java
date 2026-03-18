@@ -24,6 +24,10 @@ public class conectaDAO {
         }
     }
 
+    public Connection getConnection() {
+        return conn;
+    }
+
     public void desconectar() {
         try {
             conn.close();
@@ -72,5 +76,5 @@ public class conectaDAO {
             return null;
         }
     }
-    
+
 }
